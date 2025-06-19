@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Kwabena Media</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .container {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: #1A73E8;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn {
+      background-color: #1A73E8;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .contact-info {
+      background: #f1f8ff;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 2rem;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .highlight {
+      color: #00C2FF;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Kwabena Media</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="order.html">Order</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="container">
+    <h2>Contact Us</h2>
+
+    <form action="https://formsubmit.co/kwabenaemma0554263293@gmail.com" method="POST">
+      <input type="hidden" name="_next" value="https://emmanuelmanu1170.github.io/Emma/thankyou.html" />
+      <input type="hidden" name="_captcha" value="false">
+
+      <label for="name">Your Name</label>
+      <input type="text" name="name" id="name" required>
+
+      <label for="email">Your Email</label>
+      <input type="email" name="email" id="email" required>
+
+      <label for="message">Message</label>
+      <textarea name="message" id="message" rows="4" required></textarea>
+
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+
+    <div class="contact-info">
+      <p>Or reach us directly:</p>
+      <p>Email: <strong class="highlight">kwabenaemma0554263293@gmail.com</strong></p>
+      <p>WhatsApp: <strong class="highlight">0554263293</strong></p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Kwabena Media
+  </footer>
+
+</body>
+</html>

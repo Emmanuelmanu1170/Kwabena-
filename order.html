@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Order | Kwabena Media</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #1A73E8;
+      padding: 1rem;
+      text-align: center;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .service-list {
+      margin-bottom: 2rem;
+    }
+    .service-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+    label, input, select, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #1A73E8;
+      color: #fff;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    #status {
+      padding: 1rem;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>  <header>
+    <h1>Kwabena Media</h1>
+    <nav>
+      <a href="./">Home</a>
+      <a href="services.html">Services</a>
+      <a href="pay.html">Order</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>  <div class="container">
+    <h2>Available Services</h2>
+    <div class="service-list">
+      <div class="service-item">Instagram Followers - GHS 3.90 / 100</div>
+      <div class="service-item">Instagram Likes - GHS 2.93 / 100</div>
+      <div class="service-item">TikTok Followers - GHS 3.32 / 100</div>
+      <div class="service-item">TikTok Likes - GHS 2.73 / 100</div>
+      <div class="service-item">YouTube Views - GHS 4.88 / 100</div>
+      <div class="service-item">Facebook Followers - GHS 4.29 / 100</div>
+      <div class="service-item">Facebook Likes - GHS 3.71 / 100</div>
+    </div><h2>Place an Order</h2>
+<form id="orderForm">
+  <label for="service">Service</label>
+  <select id="service" required>
+    <option value="Instagram Followers">Instagram Followers</option>
+    <option value="Instagram Likes">Instagram Likes</option>
+    <option value="TikTok Followers">TikTok Followers</option>
+    <option value="TikTok Likes">TikTok Likes</option>
+    <option value="YouTube Views">YouTube Views</option>
+    <option value="Facebook Followers">Facebook Followers</option>
+    <option value="Facebook Likes">Facebook Likes</option>
+  </select>
+
+  <label for="quantity">Quantity (in 100s)</label>
+  <input type="number" id="quantity" required>
+
+  <label for="link">Social Media Link</label>
+  <input type="text" id="link" required>
+
+  <label for="email">Your Email</label>
+  <input type="email" id="email" required>
+
+  <button type="submit">Pay & Order</button>
+</form>
+<div id="status"></div>
+
+  </div>  <script src="https://js.paystack.co/v1/inline.js"></script>  <script>
+    const services = {
+      "Instagram Followers": { id: 1, price: 3.90 },
+      "Instagram Likes": { id: 2, price: 2.93 },
+      "TikTok Followers": { id: 3, price: 3.32 },
+      "TikTok Likes": { id: 4, price: 2.73 },
+      "YouTube Views": { id: 5, price: 4.88 },
+      "Facebook Followers": { id: 6, price: 4.29 },
+      "Facebook Likes": { id: 7, price: 3.71 }
+    };
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const serviceName = document.getElementById("service").value;
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const link = document.getElementById("link").value;
+      const email = document.getElementById("email").value;
+
+      const service = services[serviceName];
+      const amount = Math.round(service.price * quantity * 100);
+
+      const handler = PaystackPop.setup({
+        key: 'pk_live_ddbf47d168d6849ef29050ffc35c98a12e11e38b',
+        email: email,
+        amount: amount * 100,
+        currency: "GHS",
+        callback: function(response) {
+          document.getElementById("status").style.display = "block";
+          document.getElementById("status").innerText = "Placing your order...";
+
+          fetch("https://justanotherpanel.com/api/v2", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              key: "********************************",
+              action: "add",
+              service: service.id,
+              quantity: quantity * 100,
+              link: link
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.order) {
+              document.getElementById("status").innerHTML = `✅ Order Placed! Order ID: <b>${data.order}</b>`;
+            } else {
+              document.getElementById("status").innerText = "❌ Failed to place order.";
+            }
+          })
+          .catch(() => {
+            document.getElementById("status").innerText = "❌ Network error.";
+          });
+
+          fetch("https://formsubmit.co/ajax/kwabenaemma0554263293@gmail.com", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              Name: "New Order",
+              Message: `Service: ${serviceName}\nQty: ${quantity * 100}\nLink: ${link}\nEmail: ${email}`
+            })
+          });
+        },
+        onClose: function() {
+          alert("Payment canceled.");
+        }
+      });
+      handler.openIframe();
+    });
+  </script></body>
+</html>
